@@ -1,21 +1,46 @@
-class Stack
+class Map
   def initialize
-    # create ivar to store stack here!
-    @stack = []
+    @map = []
   end
 
-  def add(el)
-    # adds an element to the stack
-    @stack.push(el)
+  def assign(key, value)
+    assigned = false
+    @map.each do |pair|
+      if pair[0] == key
+        pair[1] = value
+        assigned = true
+      end
+    end
+    @map << [key, value] unless assigned
   end
 
-  def remove
-    # removes one element from the stack
-    @stack.pop
+  def lookup(key)
+    @map.each do |pair|
+      if pair[0] == key
+        return pair[1]
+      else
+        return nil
+      end
+    end
+  end
+
+  def remove(key)
+    @map.each_with_index do |pair, i|
+      if pair[0] == key
+        @map.delete_at(i)
+      end
+    end
   end
 
   def show
-    # return a copy of the stack
-    @stack
+    @map
   end
+
 end
+
+m = Map.new
+
+m.assign("Name", "Mickey")
+p m.show
+m.remove("Name")
+p m.show
